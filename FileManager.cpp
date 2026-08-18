@@ -9,10 +9,7 @@ bool FileManager::fileExists(const std::string& path) {
     return (stat(path.c_str(), &buffer) == 0);
 }
 
-// Restaurant file format (pipe-delimited, one entity per line):
-//   R|id|name|zone|cuisine|rating
-//   M|restaurantId|name|price|isVeg(0/1)|prepTimeMinutes
-// Menu lines always immediately relate to the most recently written R line.
+
 void FileManager::saveRestaurants(const RestaurantList& list, const std::string& path) {
     std::ofstream out(path);
     if (!out) { std::cerr << "  Could not open " << path << " for writing.\n"; return; }
@@ -32,7 +29,7 @@ void FileManager::saveRestaurants(const RestaurantList& list, const std::string&
 
 void FileManager::loadRestaurants(RestaurantList& list, const std::string& path) {
     std::ifstream in(path);
-    if (!in) return; // nothing to load yet, that's fine on first run
+    if (!in) return; 
 
     std::string line;
     RestaurantNode* lastAdded = nullptr;
@@ -67,8 +64,7 @@ void FileManager::loadRestaurants(RestaurantList& list, const std::string& path)
 void FileManager::saveOrderHistory(const OrderHistoryStack& stack, const std::string& path) {
     std::ofstream out(path);
     if (!out) { std::cerr << "  Could not open " << path << " for writing.\n"; return; }
-    // toVector() returns top-of-stack first; write in that order so the
-    // most recent order is the first line for quick inspection.
+    
     for (const auto& o : stack.toVector()) out << o.serialize() << "\n";
 }
 
@@ -81,8 +77,7 @@ void FileManager::loadOrderHistory(OrderHistoryStack& stack, const std::string& 
         if (line.empty()) continue;
         loaded.push_back(Order::deserialize(line));
     }
-    // File stores most-recent-first; push in reverse so stack order
-    // (top = most recent) is preserved after reload.
+    
     for (auto it = loaded.rbegin(); it != loaded.rend(); ++it) stack.push(*it);
 }
 
