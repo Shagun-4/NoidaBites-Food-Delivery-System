@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-// ---------- Menu: singly linked list of dishes belonging to one restaurant ----------
+// Menu: singly linked list of dishes belonging to one restaurant 
 struct MenuItemNode {
     std::string name;
     double price;
@@ -22,7 +22,7 @@ private:
 public:
     MenuList();
     ~MenuList();
-    // Rule of three: a restaurant list copies restaurants, each holding a MenuList
+    
     MenuList(const MenuList& other);
     MenuList& operator=(const MenuList& other);
 
@@ -34,11 +34,11 @@ public:
     void display() const;
 };
 
-// ---------- Restaurant: node in a singly linked list of all restaurants ----------
+
 struct RestaurantNode {
     int id;
     std::string name;
-    std::string zone;      // delivery zone / Noida sector, must match a DeliveryGraph zone
+    std::string zone;      
     std::string cuisine;
     float rating;
     MenuList menu;
@@ -62,10 +62,9 @@ public:
     RestaurantNode* getHead() const { return head; }
     int count() const;
 
-    // Searching (two techniques, as required by the "Searching" component):
-    // 1) Linear/substring search directly over the linked list (case-insensitive).
+    
     std::vector<RestaurantNode*> searchByNameContains(const std::string& query) const;
-    // 2) Binary search for an exact name match, over a freshly sorted snapshot vector.
+    
     RestaurantNode* searchByNameExactBinary(const std::string& exactName) const;
 
     void displayAll() const;
