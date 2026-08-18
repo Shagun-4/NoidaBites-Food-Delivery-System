@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-// A single line item within an order (e.g. "2 x Paneer Tikka")
+
 struct OrderItem {
     std::string itemName;
     double price;
@@ -29,7 +29,7 @@ public:
     double deliveryDistanceKm;
     double totalBill;
     OrderStatus status;
-    std::string placedAt; // human readable timestamp
+    std::string placedAt; 
 
     Order();
     Order(int id, const std::string& custName, const std::string& restName,
@@ -38,9 +38,8 @@ public:
     void addItem(const std::string& name, double price, int qty);
     void calculateBill(double distanceKm, double deliveryChargePerKm, double baseDeliveryFee, double gstRate);
     void printReceipt() const;
-    void printSummary() const; // one-line summary, used in stack/queue displays
+    void printSummary() const; 
 
-    // simple pipe-delimited serialization for file persistence
     std::string serialize() const;
     static Order deserialize(const std::string& line);
 };
