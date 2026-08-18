@@ -158,7 +158,7 @@ std::vector<RestaurantNode*> RestaurantList::searchByNameContains(const std::str
 }
 
 RestaurantNode* RestaurantList::searchByNameExactBinary(const std::string& exactName) const {
-    // Build a sorted snapshot (vector of pointers into the live linked list nodes)
+    
     std::vector<RestaurantNode*> snapshot;
     RestaurantNode* cur = head;
     while (cur) { snapshot.push_back(cur); cur = cur->next; }
