@@ -1,6 +1,6 @@
 # NoidaBites — Mini Food Delivery System
 
-A console-based food delivery app (Mini Swiggy/Zomato) built in C++ for a DSA major project.
+A console based food delivery app (Mini Swiggy/Zomato) built in C++ for a DSA major project.
 Delivery zones are modelled on Noida sectors, with a small road-distance graph used for
 route finding and delivery pricing.
 
