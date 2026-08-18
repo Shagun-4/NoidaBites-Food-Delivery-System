@@ -1,15 +1,3 @@
-// ============================================================
-//  NoidaBites — Mini Food Delivery System
-//  Major Project (DSA in C++)
-//
-//  Data structures used:
-//    Linked List  -> Restaurant.h / Restaurant.cpp  (restaurants + per-restaurant menu)
-//    Queue        -> OrderQueue.h / OrderQueue.cpp   (kitchen order processing, FIFO)
-//    Stack        -> OrderHistoryStack.h / .cpp      (completed order history, LIFO)
-//    Graph        -> DeliveryGraph.h / .cpp          (Noida zones + Dijkstra route/distance)
-//    Searching    -> Restaurant.cpp                  (linear substring + binary exact-match)
-// ============================================================
-
 #include <iostream>
 #include <iomanip>
 #include <limits>
@@ -30,9 +18,8 @@ const double GST_RATE = 0.05;              // 5% GST on food subtotal
 const double DELIVERY_RATE_PER_KM = 8.0;   // Rs. per km
 const double BASE_DELIVERY_FEE = 15.0;     // Rs. flat fee
 
-// ---------------------------------------------------------------
 // input helper functions
-// ---------------------------------------------------------------
+
 int readInt(const std::string& prompt) {
     int value;
     while (true) {
@@ -76,9 +63,9 @@ void pause() {
     std::cin.get();
 }
 
-// ---------------------------------------------------------------
+
 // setup: Noida delivery zone graph
-// ---------------------------------------------------------------
+
 void setupNoidaGraph(DeliveryGraph& graph) {
     const char* zones[] = {
         "Sector 18", "Sector 15", "Botanical Garden", "Film City",
@@ -136,9 +123,9 @@ void seedRestaurants(RestaurantList& list) {
     r5->menu.addItem("Cold Coffee", 110, true, 4);
 }
 
-// ---------------------------------------------------------------
+
 // feature: restaurant search
-// ---------------------------------------------------------------
+
 void handleSearch(const RestaurantList& restaurants) {
     std::cout << "\n  1. Search by partial name (linear scan)\n";
     std::cout << "  2. Search by exact name (binary search on sorted snapshot)\n";
@@ -162,9 +149,9 @@ void handleSearch(const RestaurantList& restaurants) {
     }
 }
 
-// ---------------------------------------------------------------
+
 // feature: place an order
-// ---------------------------------------------------------------
+
 void handlePlaceOrder(RestaurantList& restaurants, OrderQueue& queue,
                        DeliveryGraph& graph, int& orderIdCounter) {
     if (restaurants.count() == 0) { std::cout << "  No restaurants available yet.\n"; return; }
@@ -222,9 +209,8 @@ void handlePlaceOrder(RestaurantList& restaurants, OrderQueue& queue,
     orderIdCounter++;
 }
 
-// ---------------------------------------------------------------
 // feature: process the next order in the kitchen queue
-// ---------------------------------------------------------------
+
 void handleProcessOrder(OrderQueue& queue, OrderHistoryStack& history) {
     Order o;
     if (!queue.dequeue(o)) { std::cout << "  No pending orders to process.\n"; return; }
@@ -241,9 +227,9 @@ void handleProcessOrder(OrderQueue& queue, OrderHistoryStack& history) {
     std::cout << "  Order #" << o.orderId << " delivered and moved to order history.\n";
 }
 
-// ---------------------------------------------------------------
+
 // feature: delivery route lookup between any two zones
-// ---------------------------------------------------------------
+
 void handleRouteQuery(DeliveryGraph& graph) {
     graph.printNetwork();
     std::string from = readLine("\n  From zone: ");
@@ -262,9 +248,8 @@ void handleRouteQuery(DeliveryGraph& graph) {
     std::cout << "\n";
 }
 
-// ---------------------------------------------------------------
 // admin actions
-// ---------------------------------------------------------------
+
 void handleAddRestaurant(RestaurantList& restaurants, DeliveryGraph& graph) {
     std::string name = readLine("  Restaurant name: ");
     std::string zone;
@@ -331,9 +316,8 @@ void handleRemoveMenuItem(RestaurantList& restaurants) {
     else std::cout << "  Menu item not found.\n";
 }
 
-// ---------------------------------------------------------------
 // menu display
-// ---------------------------------------------------------------
+
 void printMainMenu() {
     std::cout << "\n================= NoidaBites =================\n";
     std::cout << " 1. Browse all restaurants\n";
@@ -368,7 +352,7 @@ int main() {
     }
     FileManager::loadOrderHistory(orderHistory, HISTORY_FILE);
 
-    // figure out the next order id from whatever history was loaded
+    
     int orderIdCounter = 1001;
     for (const auto& o : orderHistory.toVector()) {
         if (o.orderId >= orderIdCounter) orderIdCounter = o.orderId + 1;
